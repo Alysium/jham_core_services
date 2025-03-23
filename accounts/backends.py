@@ -6,9 +6,9 @@ class EmailOrPhoneNumberBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         UserModel = get_user_model()
         try:
-            # Check if the username is an email or phone number
+            # Check if the username is an email, phone number, or username
             user = UserModel.objects.get(
-                Q(email=username) | Q(phone_number=username)
+                Q(username=username) | Q(email=username) | Q(phone_number=username)
             )
             if user.check_password(password):
                 return user

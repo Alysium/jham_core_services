@@ -10,8 +10,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'phone_number', 'password', 'password2')
+        fields = ('username', 'email', 'phone_number', 'password', 'password2')
         extra_kwargs = {
+            'username': {'required': True},
             'email': {'required': True},
             'phone_number': {'required': True},
         }
@@ -27,11 +28,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 class UserLoginSerializer(serializers.Serializer):
-    username = serializers.CharField(required=True)  # This will be either email or phone number
+    username = serializers.CharField(required=True)  # This can be username, email, or phone number
     password = serializers.CharField(required=True)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'phone_number', 'first_name', 'last_name')
+        fields = ('id', 'username', 'email', 'phone_number', 'first_name', 'last_name')
         read_only_fields = ('id',) 
